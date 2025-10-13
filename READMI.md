@@ -47,10 +47,11 @@ Backend API will be available at: http://localhost:5000/api
 ## Frontend Setup
 1. Navigate to the frontend/ folder.
 
-2. Open index.html in a browser
+2. Open **index.html** in a browser
 
-3. Login with:
-   Username: admin
-   Password: 1234
+3. Login with 
+
+   **Username:** admin
+   **Password:** 1234
 
 Start adding and managing Campaigns
