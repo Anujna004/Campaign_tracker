@@ -1,6 +1,6 @@
 const API = "http://127.0.0.1:5000/api";
 
-// ---------------- LOGIN ----------------
+
 async function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
@@ -32,7 +32,7 @@ async function login() {
   }
 }
 
-// ---------------- LOGOUT ----------------
+
 function logout() {
   localStorage.removeItem("loggedIn");
   document.getElementById("mainPage").classList.add("hidden");
@@ -42,7 +42,7 @@ function logout() {
   document.getElementById("password").value = "";
 }
 
-// ---------------- AUTO LOGOUT ON PAGE LOAD ----------------
+
 window.addEventListener("DOMContentLoaded", () => {
   localStorage.removeItem("loggedIn");
   document.getElementById("mainPage").classList.add("hidden");
@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
   checkFormFields();
 });
 
-// ---------------- LOAD CAMPAIGNS ----------------
+
 async function loadCampaigns() {
   const q = document.getElementById("search").value || "";
   const res = await fetch(`${API}/campaigns?q=${q}`);
@@ -78,13 +78,13 @@ async function loadCampaigns() {
 
     tbody.appendChild(row);
 
-    // Set initial status color
+    
     const selectEl = row.querySelector("select");
     setStatusColor(selectEl);
   });
 }
 
-// ---------------- ADD CAMPAIGN ----------------
+
 async function addCampaign() {
   const name = document.getElementById("name").value.trim();
   const client = document.getElementById("client").value.trim();
@@ -113,7 +113,7 @@ async function addCampaign() {
   }
 }
 
-// ---------------- UPDATE STATUS ----------------
+
 async function updateStatus(id, selectEl) {
   const status = selectEl.value;
   setStatusColor(selectEl);
@@ -127,7 +127,7 @@ async function updateStatus(id, selectEl) {
   loadSummary();
 }
 
-// ---------------- SET STATUS COLOR ----------------
+
 function setStatusColor(selectEl) {
   selectEl.classList.remove("active", "paused", "completed");
   switch(selectEl.value.trim()) {
@@ -137,7 +137,6 @@ function setStatusColor(selectEl) {
   }
 }
 
-// ---------------- DELETE CAMPAIGN ----------------
 let deleteId = null;
 function confirmDelete(id, name) {
   deleteId = id;
@@ -156,7 +155,7 @@ document.getElementById("confirmNo").addEventListener("click", () => {
   document.getElementById("deleteModal").classList.add("hidden");
 });
 
-// ---------------- SUCCESS MODAL ----------------
+
 function showSuccessModal(message) {
   document.getElementById("successMessage").textContent = message;
   document.getElementById("successModal").classList.remove("hidden");
@@ -166,7 +165,7 @@ document.getElementById("successOk").addEventListener("click", () => {
   document.getElementById("successModal").classList.add("hidden");
 });
 
-// ---------------- DASHBOARD SUMMARY ----------------
+
 async function loadSummary() {
   const res = await fetch(`${API}/summary`);
   const s = await res.json();
@@ -176,13 +175,13 @@ async function loadSummary() {
   document.getElementById("completed").textContent = s.completed;
 }
 
-// ---------------- SEARCH FILTER ----------------
+
 document.getElementById("search").addEventListener("input", () => {
   clearTimeout(window._timer);
   window._timer = setTimeout(loadCampaigns, 400);
 });
 
-// ---------------- ENABLE/DISABLE ADD BUTTON ----------------
+
 const addBtn = document.getElementById("addCampaignBtn");
 const nameInput = document.getElementById("name");
 const clientInput = document.getElementById("client");
