@@ -5,25 +5,24 @@ from bson import ObjectId
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
+
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-# Connect to MongoDB
+
 client = MongoClient(os.getenv("MONGO_URI"))
 db = client[os.getenv("DB_NAME")]
 campaigns = db["campaigns"]
 
-# Helper function to serialize MongoDB documents
+
 def serialize_campaign(c):
     c["_id"] = str(c["_id"])
     return c
 
-# ------------------ ROUTES ------------------
 
-# 1️⃣ Add Campaign
+
 @app.route("/api/campaigns", methods=["POST"])
 def add_campaign():
     data = request.json
@@ -43,7 +42,7 @@ def add_campaign():
     return jsonify(serialize_campaign(added)), 201
 
 
-# 2️⃣ Get All Campaigns (with optional search)
+
 @app.route("/api/campaigns", methods=["GET"])
 def get_campaigns():
     q = request.args.get("q", "")
@@ -56,7 +55,7 @@ def get_campaigns():
     return jsonify(data)
 
 
-# 3️⃣ Update Campaign Status
+
 @app.route("/api/campaigns/<id>/status", methods=["PATCH"])
 def update_status(id):
     status = request.json.get("status")
@@ -71,7 +70,7 @@ def update_status(id):
     return jsonify(serialize_campaign(updated)), 200
 
 
-# 4️⃣ Delete Campaign
+
 @app.route("/api/campaigns/<id>", methods=["DELETE"])
 def delete_campaign(id):
     result = campaigns.delete_one({"_id": ObjectId(id)})
@@ -80,7 +79,7 @@ def delete_campaign(id):
     return jsonify({"message": "Deleted successfully", "id": id})
 
 
-# 5️⃣ Dashboard Summary
+
 @app.route("/api/summary", methods=["GET"])
 def summary():
     total = campaigns.count_documents({})
@@ -96,7 +95,7 @@ def summary():
     })
 
 
-# 6️⃣ Simple Login (Hardcoded)
+
 @app.route("/api/login", methods=["POST"])
 def login():
     data = request.json
@@ -105,6 +104,6 @@ def login():
     return jsonify({"error": "Invalid credentials"}), 401
 
 
-# ------------------------------------------------
+
 if __name__ == "__main__":
     app.run(debug=True)
