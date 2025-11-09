@@ -1,4 +1,5 @@
-const API = "https://campaign-tracker-qyql.onrender.com/api";
+// Use relative path so it works both locally and on Render
+const API = "/api";
 
 
 
